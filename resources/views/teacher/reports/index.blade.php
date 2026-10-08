@@ -3,67 +3,87 @@
     <x-slot name="header">Teacher Personal Reports &amp; Accreditation Dashboard</x-slot>
 
     <div class="space-y-8" x-data="{ activeTab: 'all' }">
-        <!-- Top Hero Banner with Performance Summary -->
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 text-white shadow-xl border border-indigo-500/20">
+        
+        <!-- Top Navigation Bar with Back & Close Options -->
+        <div class="flex items-center justify-between bg-white border border-gray-200 px-5 py-3 rounded-2xl shadow-xs">
+            <a href="{{ route('teacher.dashboard') }}" 
+               class="inline-flex items-center gap-2 text-xs font-bold text-gray-700 hover:text-indigo-600 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                &larr; Back to Dashboard
+            </a>
+
+            <a href="{{ route('teacher.dashboard') }}" 
+               class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gray-100 hover:bg-rose-50 hover:text-rose-600 text-xs font-bold text-gray-600 transition-colors" title="Close and return">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+                <span>Close (X)</span>
+            </a>
+        </div>
+
+        <!-- Top Hero Banner with Performance Summary (Clean White Theme) -->
+        <div class="relative overflow-hidden rounded-2xl bg-white border border-gray-200 p-6 sm:p-8 text-gray-900 shadow-sm mb-8">
             <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div class="max-w-2xl space-y-2">
-                    <div class="inline-flex items-center gap-2 rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-semibold text-indigo-300 border border-indigo-400/30">
-                        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 border border-indigo-200">
+                        <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                         DRR Educator Personal Portfolio
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-white">
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-gray-900">
                         {{ auth()->user()->name }}'s Accreditation Record
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
                         Comprehensive audit of your DRR training progress, final assessment attempts, digital certifications, and post-training classroom student deployments.
                     </p>
                 </div>
 
                 <!-- Aggregate Stats Pillbox -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white/5 backdrop-blur-md p-4 rounded-2xl border border-white/10 shrink-0 text-center">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-200 shrink-0 text-center">
                     <div class="p-2">
-                        <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Workshops</span>
-                        <span class="text-2xl font-black text-white">{{ $trainingProgress->count() }}</span>
+                        <span class="block text-[10px] font-bold uppercase tracking-wider text-gray-500">Workshops</span>
+                        <span class="text-2xl font-black text-gray-900">{{ $trainingProgress->count() }}</span>
                     </div>
                     <div class="p-2">
-                        <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-300">Certificates</span>
-                        <span class="text-2xl font-black text-amber-400">{{ $certifications->count() }}</span>
+                        <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-600">Certificates</span>
+                        <span class="text-2xl font-black text-amber-600">{{ $certifications->count() }}</span>
                     </div>
                     <div class="p-2">
-                        <span class="block text-[10px] font-bold uppercase tracking-wider text-sky-300">Students Reached</span>
-                        <span class="text-2xl font-black text-sky-400">{{ number_format($totalStudentsReached) }}</span>
+                        <span class="block text-[10px] font-bold uppercase tracking-wider text-sky-600">Students Reached</span>
+                        <span class="text-2xl font-black text-sky-600">{{ number_format($totalStudentsReached) }}</span>
                     </div>
                     <div class="p-2">
-                        <span class="block text-[10px] font-bold uppercase tracking-wider text-emerald-300">Class Average</span>
-                        <span class="text-2xl font-black text-emerald-400">{{ $overallClassAverage }}%</span>
+                        <span class="block text-[10px] font-bold uppercase tracking-wider text-emerald-600">Class Average</span>
+                        <span class="text-2xl font-black text-emerald-600">{{ $overallClassAverage }}%</span>
                     </div>
                 </div>
             </div>
 
             <!-- Quick Navigation Tabs -->
-            <div class="relative z-10 mt-6 pt-5 border-t border-white/10 flex flex-wrap gap-2 text-xs font-bold">
+            <div class="relative z-10 mt-6 pt-5 border-t border-gray-200 flex flex-wrap gap-2 text-xs font-bold">
                 <button type="button" @click="activeTab = 'all'"
-                        :class="activeTab === 'all' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-white/10 text-slate-300 hover:bg-white/20'"
+                        :class="activeTab === 'all' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
                         class="px-4 py-2 rounded-xl transition-all">
                     All Reports
                 </button>
                 <button type="button" @click="activeTab = 'progress'"
-                        :class="activeTab === 'progress' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-white/10 text-slate-300 hover:bg-white/20'"
+                        :class="activeTab === 'progress' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
                         class="px-4 py-2 rounded-xl transition-all">
                     1. Training Progress ({{ $trainingProgress->count() }})
                 </button>
                 <button type="button" @click="activeTab = 'assessment'"
-                        :class="activeTab === 'assessment' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-white/10 text-slate-300 hover:bg-white/20'"
+                        :class="activeTab === 'assessment' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
                         class="px-4 py-2 rounded-xl transition-all">
                     2. Assessment Logs ({{ $assessmentAttempts->count() }})
                 </button>
                 <button type="button" @click="activeTab = 'certificate'"
-                        :class="activeTab === 'certificate' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-white/10 text-slate-300 hover:bg-white/20'"
+                        :class="activeTab === 'certificate' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
                         class="px-4 py-2 rounded-xl transition-all">
                     3. Digital Certificates ({{ $certifications->count() }})
                 </button>
                 <button type="button" @click="activeTab = 'implementation'"
-                        :class="activeTab === 'implementation' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-white/10 text-slate-300 hover:bg-white/20'"
+                        :class="activeTab === 'implementation' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
                         class="px-4 py-2 rounded-xl transition-all">
                     4. Classroom Implementations ({{ $totalImplementations }})
                 </button>
@@ -80,9 +100,14 @@
                         <p class="text-xs text-slate-500">Workshops joined, sequential modules completed, and completion percentages.</p>
                     </div>
                 </div>
-                <a href="{{ route('teacher.workshops.my') }}" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">
-                    Manage Registrations &rarr;
-                </a>
+                <div class="flex items-center gap-3">
+                    <button type="button" @click="activeTab = 'all'" x-show="activeTab === 'progress'" class="text-xs font-semibold text-slate-500 hover:text-slate-800">
+                        &larr; Back to All
+                    </button>
+                    <a href="{{ route('teacher.workshops.my') }}" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">
+                        Manage Registrations &rarr;
+                    </a>
+                </div>
             </div>
 
             @if ($trainingProgress->isEmpty())
@@ -169,6 +194,9 @@
                         <p class="text-xs text-slate-500">Detailed attempt history, percentage scores, passing threshold, and evaluation results.</p>
                     </div>
                 </div>
+                <button type="button" @click="activeTab = 'all'" x-show="activeTab === 'assessment'" class="text-xs font-semibold text-slate-500 hover:text-slate-800">
+                    &larr; Back to All
+                </button>
             </div>
 
             @if ($assessmentAttempts->isEmpty())
@@ -245,9 +273,14 @@
                         <p class="text-xs text-slate-500">Official accreditation credentials, verifiable badge view, and printable certificates.</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">
-                    {{ $certifications->count() }} Issued Credentials
-                </span>
+                <div class="flex items-center gap-3">
+                    <button type="button" @click="activeTab = 'all'" x-show="activeTab === 'certificate'" class="text-xs font-semibold text-slate-500 hover:text-slate-800">
+                        &larr; Back to All
+                    </button>
+                    <span class="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">
+                        {{ $certifications->count() }} Issued Credentials
+                    </span>
+                </div>
             </div>
 
             @if ($certifications->isEmpty())
@@ -258,11 +291,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($certifications as $cert)
                         <div class="bg-white rounded-3xl border border-amber-200/80 p-6 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md hover:border-amber-400 transition-all">
-                            <!-- Background golden radial flare -->
                             <div class="absolute -top-12 -right-12 w-36 h-36 bg-amber-400/10 rounded-full blur-2xl pointer-events-none"></div>
 
                             <div>
-                                <!-- Gold Badge Representation -->
                                 <div class="flex items-center gap-4">
                                     <div class="h-16 w-16 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 p-1 shadow-md border-2 border-amber-500/40 shrink-0 flex items-center justify-center">
                                         <div class="h-full w-full rounded-xl bg-slate-900 text-amber-300 flex flex-col items-center justify-center text-center p-1">
@@ -329,16 +360,21 @@
                     </div>
                 </div>
 
-                <a href="{{ route('teacher.implementations.create') }}" 
-                   class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-xs transition-colors">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    Log New Session
-                </a>
+                <div class="flex items-center gap-3">
+                    <button type="button" @click="activeTab = 'all'" x-show="activeTab === 'implementation'" class="text-xs font-semibold text-slate-500 hover:text-slate-800">
+                        &larr; Back to All
+                    </button>
+                    <a href="{{ route('teacher.implementations.create') }}" 
+                       class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-xs transition-colors">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Log New Session
+                    </a>
+                </div>
             </div>
 
-            <!-- Aggregate Performance Summary Cards (No Manual Input Rule) -->
+            <!-- Aggregate Performance Summary Cards -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs">
                     <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Total Sessions</span>
@@ -365,7 +401,6 @@
                 </div>
             </div>
 
-            <!-- Implementation Past Logs -->
             @if ($implementations->isEmpty())
                 <div class="bg-white rounded-2xl border border-dashed border-slate-300 p-8 text-center text-xs text-slate-500">
                     No classroom implementations recorded yet. Once you obtain your DRR certification, roll out the workshop repository materials with your learners and log scores here!
@@ -398,7 +433,6 @@
                                 </div>
                             </div>
 
-                            <!-- Metrics Strip -->
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs">
                                 <div>
                                     <span class="text-slate-400 block text-[10px] uppercase font-bold">Students Reached:</span>
@@ -418,7 +452,6 @@
                                 </div>
                             </div>
 
-                            <!-- Written Reflection -->
                             @if ($imp->teacher_reflection)
                                 <div class="text-xs bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/60">
                                     <span class="font-bold text-slate-700 block mb-1 uppercase tracking-wider text-[10px]">Teacher Written Reflection:</span>

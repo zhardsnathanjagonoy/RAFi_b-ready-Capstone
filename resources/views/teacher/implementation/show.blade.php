@@ -161,7 +161,7 @@
                             <tr class="hover:bg-slate-50/70 transition-colors">
                                 <td class="p-4 text-center font-bold text-slate-400">{{ $index + 1 }}</td>
                                 <td class="p-4 font-bold text-slate-900">{{ $res->student_identifier }}</td>
-                                <td class="p-4 text-center font-medium">{{ $res->score }}</td>
+                               <td class="p-4 text-center font-medium">{{ $res->score }} / {{ $res->total_questions }}</td>
                                 <td class="p-4 text-center font-extrabold text-slate-800">{{ $res->percentage }}%</td>
                                 <td class="p-4 text-right">
                                     <span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {{ $isPassed ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200' }}">
